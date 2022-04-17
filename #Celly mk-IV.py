@@ -7,7 +7,7 @@ import random
 import math
 
 
-getpscore = open("C:/Users/Tarin/Documents/T4/Python/pscores.txt",'r').readlines(1)
+getpscore = open("/home/pi/Documents/T4/Python/pscores.txt",'r').readlines(1)
 
 
 TOKEN = ''
@@ -25,7 +25,7 @@ async def on_message(message):
     user_message = str(message.content)
     user_message_nospace = str(user_message.replace(' ', ''))
     channel = str(message.channel.name)
-    getpscore = open("C:/Users/Tarin/Documents/T4/Python/pscores.txt",'r').readlines(1)
+    getpscore = open("/home/pi/Documents/T4/Python/pscores.txt",'r').readlines(1)
     print(f'{username}: {user_message} ({channel})')
 
     if message.author == client.user:
@@ -49,7 +49,7 @@ async def on_message(message):
 
     if 'fart' in user_message_nospace.lower():
         await message.channel.send(f'{fulluser} has been reported to Discord Staff for saying {user_message}. (Message contains the f-word). -1℗.')
-        c = open("C:/Users/Tarin/Documents/T4/Python/pscores.txt", 'r+')
+        c = open("/home/pi/Documents/T4/Python/pscores.txt", 'r+')
         c.truncate(0)
         pscorea = int(getpscore[0])
         pscorea = pscorea - 1
@@ -57,13 +57,14 @@ async def on_message(message):
         return
 
     if user_message == '℗':
-        await message.channel.send(f'The current Puffhyu Score is {getpscore[0]}℗.')
+        pscoreb = getpscore[0].replace('\n', '')
+        await message.channel.send(f'The current Puffhyu Score is {pscoreb}℗.') 
 
 
     if 'puffhyu' in user_message_nospace.lower():
         if 'hate' in user_message_nospace.lower():
             await message.channel.send(f'Bad work, citizen. The CPP disapproves of this behavior. -1℗.')
-            f = open("C:/Users/Tarin/Documents/T4/Python/pscores.txt", 'r+')
+            f = open("/home/pi/Documents/T4/Python/pscores.txt", 'r+')
             f.truncate(0)
             pscorea = int(getpscore[0])
             pscorea = pscorea - 1
@@ -71,7 +72,7 @@ async def on_message(message):
             return
         elif 'love' in user_message_nospace.lower():
             await message.channel.send(f'Good work, citizen. The CPP applauds you for your behavior. +1℗.')
-            g = open("C:/Users/Tarin/Documents/T4/Python/pscores.txt", 'r+')
+            g = open("/home/pi/Documents/T4/Python/pscores.txt", 'r+')
             g.truncate(0)
             pscorea = int(getpscore[0])
             pscorea = pscorea + 1
