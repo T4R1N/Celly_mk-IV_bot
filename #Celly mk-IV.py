@@ -32,11 +32,18 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    if client.user in message.mentions:
+        await message.channel.send(f"Hey, {username}! You can say `Hey Celly` or `hc` to start a command for me to reply to.\nDo `Hey Celly,` followed by `what can you do` or `help` in order to learn about more commands.\nI promise not to beat you to death.")
+        return 
+
+    if '<@350292301270220801>' in user_message:
+        await message.channel.send("Tarin probably doesn't want to talk to you.")
+
 
     #Hey Celly,
     if 'heycelly' in user_message_nospace.lower() or 'hc' in user_message_nospace.lower():
         if 'help' in user_message_nospace.lower() or 'canyoudo' in user_message_nospace.lower():
-            await message.channel.send("Say 'Hey Celly' in order to begin a command.\n`Rickroll` -> does not rickroll you no matter what you do to it.\n\nThese commands don't need 'Hey Celly':\n\n`fart` -> Don't say this. It will subtract from the Puffhyu Score.\n`℗` -> Displays the current Puffhyu Score.\n`I love Puffhyu` -> Increases Puffhyu Score.\n`I hate Puffhyu` -> Decreases Puffhyu Score.")
+            await message.channel.send("Say 'Hey Celly' in order to begin a command. (You can use full sentences!)\n`Rickroll` -> does not rickroll you no matter what you do to it.\n\nThese commands don't need 'Hey Celly':\n\n`fart` -> Don't say this. It will subtract from the Puffhyu Score.\n`℗` -> Displays the current Puffhyu Score.\n`I love Puffhyu` -> Increases Puffhyu Score.\n`I hate Puffhyu` -> Decreases Puffhyu Score.")
             return
         if 'rickroll' in user_message_nospace.lower():
             if "don't" in user_message_nospace.lower() or "donot" in user_message_nospace.lower():
@@ -52,7 +59,7 @@ async def on_message(message):
     #Puffhyu Score
 
     if 'fart' in user_message_nospace.lower():
-        await message.channel.send(f'{fulluser} has been reported to Discord Staff for saying {user_message}. (Message contains the f-word). -1℗.')
+        await message.channel.send(f'{fulluser} has been reported to Discord Staff for saying `{user_message}`. (Message contains the f-word). -1℗.')
         c = open("/home/pi/Documents/T4/Python/pscores.txt", 'r+')
         c.truncate(0)
         pscorea = int(getpscore[0])
