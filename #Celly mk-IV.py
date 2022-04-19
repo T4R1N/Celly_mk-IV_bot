@@ -14,13 +14,14 @@ TOKEN = ''
 
 client = discord.Client()
 
+
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord. Activity(type=discord.ActivityType.watching, name='you'))
     print('We have logged in as {0.user}'.format(client))
 
 @client.event
-async def on_message(message):
+async def on_message(message,ctx):
     username = str(message.author).split('#')[0]
     fulluser = str(message.author)
     user_message = str(message.content)
@@ -33,17 +34,18 @@ async def on_message(message):
         return
 
     if client.user in message.mentions:
-        await message.channel.send(f"Hey, {username}! You can say `Hey Celly` or `hc` to start a command for me to reply to.\nDo `Hey Celly,` followed by `what can you do` or `help` in order to learn about more commands.\nI promise not to beat you to death.")
+        await message.channel.send(f"Hey, {username}! You can say `Hey Celly` or `hc` to start a command.\n\nDo `Hey Celly,` followed by `what can you do` or `help` in order to learn about more commands.\n\nI promise not to beat you to death.")
         return 
 
     if '<@350292301270220801>' in user_message:
         await message.channel.send("Tarin probably doesn't want to talk to you.")
 
+    
 
     #Hey Celly,
     if 'heycelly' in user_message_nospace.lower() or 'hc' in user_message_nospace.lower():
         if 'help' in user_message_nospace.lower() or 'canyoudo' in user_message_nospace.lower():
-            await message.channel.send("Say 'Hey Celly' in order to begin a command. (You can use full sentences!)\n`Rickroll` -> does not rickroll you no matter what you do to it.\n\nThese commands don't need 'Hey Celly':\n\n`fart` -> Don't say this. It will subtract from the Puffhyu Score.\n`℗` -> Displays the current Puffhyu Score.\n`I love Puffhyu` -> Increases Puffhyu Score.\n`I hate Puffhyu` -> Decreases Puffhyu Score.")
+            await message.channel.send("Say 'Hey Celly' in order to begin a command. (You can use full sentences!)\n\n`Rickroll` -> does not rickroll you no matter what you do to it.\n\nThese commands don't need 'Hey Celly':\n\n`fart` -> Don't say this. It will subtract from the Puffhyu Score.\n`℗` -> Displays the current Puffhyu Score.\n`I love Puffhyu` -> Increases Puffhyu Score.\n`I hate Puffhyu` -> Decreases Puffhyu Score.")
             return
         if 'rickroll' in user_message_nospace.lower():
             if "don't" in user_message_nospace.lower() or "donot" in user_message_nospace.lower():
@@ -52,6 +54,17 @@ async def on_message(message):
             else:
                 await message.channel.send('No.')
                 return
+        #Ping users
+        if "ping" in user_message.lower():
+            if "vc" in user_message.lower() or "call" in user_message.lower():
+                voice_state = ctx.member.voice
+                if voice_state is None:
+                    # Exiting if the user is not in a voice channel
+                    return await ctx.send('You must be in the voice call that you would like to ping.')
+                vchannel = ctx.author.voice.channel
+                members = vchannel.voice_members
+                for x in members:
+                    await message.channel.send(f'<@{x}>')
 
     
           
@@ -59,7 +72,7 @@ async def on_message(message):
     #Puffhyu Score
 
     if 'fart' in user_message_nospace.lower():
-        await message.channel.send(f'{fulluser} has been reported to Discord Staff for saying `{user_message}`. (Message contains the f-word). -1℗.')
+        await message.channel.send(f'{fulluser} has been reported to Discord Staff for saying `{user_message}`.\n(Message contains the f-word). -1℗.')
         c = open("/home/pi/Documents/T4/Python/pscores.txt", 'r+')
         c.truncate(0)
         pscorea = int(getpscore[0])
