@@ -10,7 +10,7 @@ import math
 getpscore = open("/home/pi/Documents/T4/Python/pscores.txt",'r').readlines(1)
 
 
-TOKEN = ''
+TOKEN = 'OTY1MDE2MDk0NDU0NzM0ODQ4.YltDRg.TTPfwlwRUxLGBxu355a038UNKvM'
 
 client = discord.Client()
 
@@ -21,7 +21,7 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
 @client.event
-async def on_message(message,ctx):
+async def on_message(message):
     username = str(message.author).split('#')[0]
     fulluser = str(message.author)
     user_message = str(message.content)
@@ -57,11 +57,11 @@ async def on_message(message,ctx):
         #Ping users
         if "ping" in user_message.lower():
             if "vc" in user_message.lower() or "call" in user_message.lower():
-                voice_state = ctx.member.voice
+                voice_state = message.member.voice
                 if voice_state is None:
                     # Exiting if the user is not in a voice channel
-                    return await ctx.send('You must be in the voice call that you would like to ping.')
-                vchannel = ctx.author.voice.channel
+                    return await message.channel.send('You must be in the voice call that you would like to ping.')
+                vchannel = message.author.voice.channel
                 members = vchannel.voice_members
                 for x in members:
                     await message.channel.send(f'<@{x}>')
