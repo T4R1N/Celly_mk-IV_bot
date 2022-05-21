@@ -10,7 +10,7 @@ import math
 getpscore = open("/home/pi/Documents/T4/Python/pscores.txt",'r').readlines(1)
 
 
-TOKEN = 'OTY1MDE2MDk0NDU0NzM0ODQ4.YltDRg.TTPfwlwRUxLGBxu355a038UNKvM'
+TOKEN = 'insert token here'
 
 client = discord.Client()
 
